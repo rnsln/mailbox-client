@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="mail_card mb-3 rounded-3 overflow-hidden border border-3 border-primary bg-primary-subtle d-flex flex flex-column">
+    <div class="border-bottom border-1 p-3 border-primary">
+      <strong class="display-3 fw-bold">{{message.title}}</strong>
+      <br>
+      <span class="text-muted fs-5">from <i>{{message.sender ? (message.sender ? message.sender.username : '') : ''}}</i></span>
+      <br>
+      <span class="text-muted fs-5">to <i>{{message.receiver ? (message.receiver ? message.receiver.username : '') : ''}}</i></span>
+    </div>
+    <div class="p-3 border-primary flex-grow-1 d-flex flex-column overflow-scroll">
+      <div>
+        <p class="text-muted text-start mb-0">{{message.date | date:'short'}}</p>
+      </div>
+      <div style="height: auto" class="flex-grow-1">
+        <p class="fs-5">{{message.content}}</p>
+      </div>
+    </div>
+  </div>
+</div>

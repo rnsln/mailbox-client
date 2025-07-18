@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="display-3 fw-bold">Users List</div>
+  <br>
+  <div class="row">
+
+    <div class="col-1">
+      <button type="submit" class="btn btn-outline-warning form-control" (click)="clear()"><i class="bi bi-eraser-fill"></i></button>
+    </div>
+
+    <div class="col-2">
+      <input type="text" placeholder="username" [defaultValue]="" [(ngModel)]="usernameSearch" (ngModelChange)="isChanged=true" class="form-control">
+    </div>
+    <div class="col-2">
+      <input type="text" placeholder="email" [defaultValue]="" [(ngModel)]="emailSearch" (ngModelChange)="isChanged=true" class="form-control">
+    </div>
+    <div class="col-2">
+      <input type="text" placeholder="name" [defaultValue]="" [(ngModel)]="nameSearch" (ngModelChange)="isChanged=true" class="form-control">
+    </div>
+    <div class="col-2">
+      <input type="text" placeholder="last name" [defaultValue]="" [(ngModel)]="lastnameSearch" (ngModelChange)="isChanged=true" class="form-control">
+    </div>
+
+    <div class="col-2">
+      <input type="number" placeholder="List Size" [defaultValue]="5" [(ngModel)]="listSize" (ngModelChange)="isChanged=true" class="form-control">
+    </div>
+    <div class="col-1">
+      <button type="submit" class="btn btn-outline-primary form-control" (click)="retrieveUsers()">Search</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead>
+        <tr>
+          <th class="text-center" scope="col">#</th>
+          <th scope="col" [className]="'text-center '+ (orderProp=='username' ? (order == 'asc' ? 'text-success' : 'text-danger') : '')" (click)="setOrder('username')" style="cursor: pointer">Username</th>
+          <th scope="col" [className]="'text-center '+ (orderProp=='email' ? (order == 'asc' ? 'text-success' : 'text-danger') : '')" (click)="setOrder('email')" style="cursor: pointer">Email</th>
+          <th scope="col" [className]="'text-center '+ (orderProp=='name' ? (order == 'asc' ? 'text-success' : 'text-danger') : '')" (click)="setOrder('name')" style="cursor: pointer">Name</th>
+          <th scope="col" [className]="'text-center '+ (orderProp=='lastname' ? (order == 'asc' ? 'text-success' : 'text-danger') : '')" (click)="setOrder('lastname')" style="cursor: pointer">Last Name</th>
+          <th scope="col" [className]="'text-center '+ (orderProp=='birthdate' ? (order == 'asc' ? 'text-success' : 'text-danger') : '')" (click)="setOrder('birthdate')" style="cursor: pointer">Birth Date</th>
+          <th scope="col" [className]="'text-center '+ (orderProp=='gender' ? (order == 'asc' ? 'text-success' : 'text-danger') : '')" (click)="setOrder('gender')" style="cursor: pointer">Gender</th>
+          <th scope="col" [className]="'text-center '+ (orderProp=='city' ? (order == 'asc' ? 'text-success' : 'text-danger') : '')" (click)="setOrder('city')" style="cursor: pointer">City</th>
+          <th class="text-center" scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (user of users; track user.id) {
+            <tr class="mb-3">
+              <th class="text-center align-content-center" scope="row">{{users.indexOf(user)+1+page*listSize}}</th>
+              <td class="text-center align-content-center">{{user.username ? user.username : '-'}}</td>
+              <td class="text-center align-content-center">{{user.email ? user.email: '-'}}</td>
+              <td class="text-center align-content-center">{{user.name ? user.name : '-'}}</td>
+              <td class="text-center align-content-center">{{user.lastname ? user.lastname : '-'}}</td>
+              <td class="text-center align-content-center">{{user.birthdate ? formatToShortDate(user.birthdate) : '-'}}</td>
+              <td class="text-center align-content-center">{{user.gender ? user.gender : '-'}}</td>
+              <td class="text-center align-content-center">{{user.city ? user.city : '-'}}</td>
+              <td class="text-center align-content-center">
+                <button class="btn btn-sm btn-warning f" (click)="redirectToEdit(user.id)">Edit</button>
+                <button class="btn btn-sm btn-danger" (click)="askToDelete(user.id)">Remove</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="row">
+      <div class="col-2">
+        <button class="btn btn-outline-light form-control" (click)="prev()" [disabled]="page<=0">Previous</button>
+      </div>
+      <div class="col-8">
+        <div class="text-center border-top border-bottom" style="height:100%; align-items: center; display: flex; justify-content: center">Showing {{page+1}} / {{totalPages}}</div>
+      </div>
+      <div class="col-2">
+        <button class="btn btn-outline-light form-control" (click)="next()" [disabled]="page>=(totalPages-1)">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="deleteUserModal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">DELETE USER</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete this user?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteUser()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

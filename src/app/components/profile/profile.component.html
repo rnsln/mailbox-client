@@ -1,0 +1,62 @@
+<div class="container" *ngIf="Object.keys(currentUser).length>0; else loggedOut">
+  <header>
+    <h3>
+      <strong>{{currentUser.username}}</strong> Profile
+    </h3>
+  </header>
+  <p>
+    <strong>Email: </strong> {{currentUser.email}}
+  </p>
+  <strong>Roles: </strong>
+  <ul>
+    @for (role of currentUser.roles; track role.id) {
+      <li>{{role.name}}</li>
+    }
+  </ul>
+  <h4>Personal Information</h4>
+  <div class="row">
+    <div class="col-4">
+      <div class="input-group mt-2">
+        <span class="input-group-text col-3">Name</span>
+        <input type="text" class="form-control" [(ngModel)]="currentUser.name" (ngModelChange)="changed=true">
+      </div>
+      <div class="input-group mt-2">
+        <span class="input-group-text col-3">Last Name</span>
+        <input type="text" class="form-control" [(ngModel)]="currentUser.lastname" (ngModelChange)="changed=true">
+      </div>
+      <div class="input-group mt-2">
+        <span class="input-group-text col-3">City</span>
+        <input type="text" class="form-control" [(ngModel)]="currentUser.city" (ngModelChange)="changed=true">
+      </div>
+      <div class="input-group mt-2">
+        <span class="input-group-text col-3">Gender</span>
+        <div class="input-group form-control">
+          <div class="form-check form-check-inline">
+            <input required class="form-check-input" [value]="'male'" type="radio" name="gender" [(ngModel)]="currentUser.gender" id="gender1" (ngModelChange)="changed=true"/>
+            <label for="genderMale" class="form-check-label">
+              Male
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input required class="form-check-input" [value]="'female'" type="radio" name="gender" [(ngModel)]="currentUser.gender" id="gender2" (ngModelChange)="changed=true"/>
+            <label for="genderFemale" class="form-check-label">
+              Female
+            </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="input-group mt-2">
+        <span class="input-group-text col-3">Birthdate</span>
+        <input type="date" class="form-control" [(ngModel)]="currentUser.birthdate" (ngModelChange)="changed=true">
+      </div>
+      <div class="input-group mt-2">
+        <button type="submit" [disabled]="!changed" class="btn btn-outline-success form-control" (click)="this.updateUser()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loggedOut>
+  Please login.
+</ng-template>

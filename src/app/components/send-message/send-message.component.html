@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h1><b>SEND MESSAGE</b></h1>
+          <hr>
+          <form
+            name="form"
+            (ngSubmit)="f.form.valid && onSubmit(); f.form.valid && f.resetForm()"
+            #f = "ngForm"
+            novalidate
+          >
+            <div class="mb-3">
+              <label for="username">Receiver</label>
+              <input
+                type="text"
+                class="form-control typeahead"
+                name="username"
+                [(ngModel)]="form.receiver"
+                required
+                #receiver="ngModel"
+                [ngbTypeahead]="search"
+                [ngClass]="{ 'is-invalid': f.submitted && content.errors}"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="receiver.errors && f.submitted">
+                <div *ngIf="receiver.errors['required']">
+                  Receiver is required
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="username">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                name="title"
+                [(ngModel)]="form.title"
+                required
+                #title="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && title.errors}"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="content.errors && f.submitted">
+                <div *ngIf="content.errors['required']">
+                  Title is required
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="username">Content</label>
+              <textarea
+                type="text"
+                class="form-control"
+                name="content"
+                [(ngModel)]="form.content"
+                required
+                #content="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && content.errors}"
+              ></textarea>
+              <div
+                class="invalid-feedback"
+                *ngIf="content.errors && f.submitted">
+                <div *ngIf="content.errors['required']">
+                  Content is required
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-lg btn-outline-success btn-block">Send</button>
+
+            <div class="alert alert-warning mt-3" *ngIf="f.submitted && isSendFailed">
+              Send failed! <br> {{errorMessage}}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

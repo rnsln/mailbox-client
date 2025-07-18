@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="display-3">Hey <a href="profile" class="fw-bold">{{user!=undefined ? user.username : ''}}</a>! Welcome to the <span class="fw-bold">Home Page</span>!</div>
+  <br>
+  <div class="display-6">Below you can find the pages you can visit.</div>
+  <hr>
+  <div class="row">
+    <div class="col-6 mb-3 home-button">
+      <div *ngIf="isAdmin" (click)="redirect('add_update_user')" class="p-5 border border-5 rounded-5 border-primary-subtle d-flex align-items-center justify-content-between">
+        <div class="display-6 fw-bold">Add New User</div>
+        <span class="text-muted">Insert a new user</span>
+        <i class="bi bi-arrow-right-circle-fill" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div class="col-6 mb-3 home-button">
+      <div *ngIf="isAdmin" (click)="redirect('users')" class="p-5 border border-5 rounded-5 border-primary-subtle d-flex align-items-center justify-content-between">
+        <div class="display-6 fw-bold">List Users</div>
+        <span>Get all users</span>
+        <i class="bi bi-arrow-right-circle-fill" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div class="col-6 mb-3 home-button">
+      <div *ngIf="isLoggedIn" (click)="redirect('inbox')" class="p-5 border border-5 rounded-5 border-primary-subtle d-flex align-items-center justify-content-between">
+        <div class="display-6 fw-bold">Inbox</div>
+        <span class="text-muted">See the messages you received</span>
+        <i class="bi bi-arrow-right-circle-fill" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div class="col-6 mb-3 home-button">
+      <div *ngIf="isLoggedIn" (click)="redirect('outbox')" class="p-5 border border-5 rounded-5 border-primary-subtle d-flex align-items-center justify-content-between">
+        <div class="display-6 fw-bold">Outbox</div>
+        <span class="text-light">See the messages you sent</span>
+        <i class="bi bi-arrow-right-circle-fill text-white" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div class="col-6 mb-3 home-button">
+      <div *ngIf="isLoggedIn" (click)="redirect('sendmessage')" class="p-5 border border-5 rounded-5 border-primary-subtle d-flex align-items-center justify-content-between">
+        <div class="display-6 fw-bold">Send Message</div>
+        <span class="text-muted">Compose a mail</span>
+        <i class="bi bi-arrow-right-circle-fill" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div class="col-6 mb-3 home-button">
+      <div *ngIf="isLoggedIn" (click)="redirect('logout')" class="p-5 border border-5 rounded-5 border-primary-subtle d-flex align-items-center justify-content-between">
+        <div class="display-6 fw-bold">Log out</div>
+        <span class="text-muted">Sign out</span>
+        <i class="bi bi-arrow-right-circle-fill" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div class="col-6 mb-3 home-button">
+      <div *ngIf="!isLoggedIn" (click)="redirect('login')" class="p-5 border border-5 rounded-5 border-primary-subtle d-flex align-items-center justify-content-between">
+        <div class="display-6 fw-bold">Log In</div>
+        <span class="text-muted">Sign in</span>
+        <i class="bi bi-arrow-right-circle-fill" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div class="col-6 mb-3 home-button">
+      <div *ngIf="!isLoggedIn" (click)="redirect('register')" class="p-5 border border-5 rounded-5 border-primary-subtle d-flex align-items-center justify-content-between">
+        <div class="display-6 fw-bold">Register</div>
+        <span class="text-muted">Create a new account</span>
+        <i class="bi bi-arrow-right-circle-fill" style="font-size: 2rem"></i>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<style>
+  .home-button{
+    transition-duration: .3s;
+    cursor: pointer;
+  }
+
+  .home-button:hover{
+    transform: translateX(10px);
+  }
+</style>

@@ -1,0 +1,85 @@
+<div class="container d-flex flex-column align-items-center">
+  <div class="col-12">
+    <div class="display-3 fw-bold">{{ type.toLocaleUpperCase()  }}</div>
+    <br>
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="listSize">List Size</label>
+      </div>
+      <div class="col-auto">
+        <input type="number" placeholder="List Size" [defaultValue]="5" [(ngModel)]="listSize" (ngModelChange)="isChanged=true" class="form-control">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary" (click)="retrieveMessages()">Search</button>
+      </div>
+    </div>
+    <hr>
+    <p class="display-6">You have {{ type=='inbox' ? 'received':'sent' }} {{totalCount>0 ? totalCount : 'no'}} message(s).</p>
+    <div class="row">
+      <div class="messages-table">
+        <table class="table">
+          <thead>
+          <tr>
+            <th class="" scope="col">#</th>
+            <th class="" scope="col">Username</th>
+            <th class="" scope="col">Title</th>
+            <th class="" scope="col">Content</th>
+            <th class="" scope="col">Date</th>
+            <th class="" scope="col">Options</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (message of messages; track message.id) {
+              <tr class="mb-3">
+                <td class="align-content-center">{{messages.indexOf(message) + 1}}</td>
+                @if (type == 'inbox') {
+                  <td class="align-content-center">{{message.sender && message.sender.username}}</td>
+                } @else {
+                  <td class="align-content-center">{{message.receiver && message.receiver.username}}</td>
+                }
+                <td class="align-content-center">{{message.title}}</td>
+                <td class="text-start align-content-center">{{message.content}}</td>
+                <td class="text-start align-content-center">{{message.date | date:'short'}}</td>
+                <td class="align-content-center text-center">
+                  <button class="btn btn-sm btn-warning" (click)="readMore(message.id)">Read</button>
+                  <button class="btn btn-sm btn-danger" (click)="askToDelete(message.id)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+          <button class="btn btn-outline-light form-control" (click)="prev()" [disabled]="page<=0">Previous</button>
+        </div>
+        <div class="col-8">
+          <div class="text-center border-top border-bottom" style="height:100%; align-items: center; display: flex; justify-content: center">Showing {{page+1}} / {{totalPages}}</div>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-outline-light form-control" (click)="next()" [disabled]="page>=(totalPages-1)">Next</button>
+        </div>
+      </div>
+  </div>
+</div>
+<style>
+</style>
+
+<div id="deleteMessageModal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">DELETE MESSAGE</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete this message?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteMessage()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
